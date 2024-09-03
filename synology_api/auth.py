@@ -56,9 +56,9 @@ class Authentication:
     def login(self, application: str) -> None:
         login_api = 'auth.cgi?api=SYNO.API.Auth'
         params = {'version': self._version, 'method': 'login', 'account': self._username,
-                  'passwd': self._password, 'format': 'cookie', 'enable_syno_token':'yes'}
-        if self._verify < 7:
-            params['session'] = application
+                  'passwd': self._password, 'session': application, 'format': 'cookie', 'enable_syno_token':'yes'}
+        if self._version >= 2:
+            params["format"] = "sid"
         if self._otp_code:
             params['otp_code'] = self._otp_code
 
